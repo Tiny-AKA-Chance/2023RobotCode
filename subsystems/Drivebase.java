@@ -27,7 +27,7 @@ public class Drivebase extends SubsystemBase implements AutoCloseable {
     RBmotor = new CANSparkMax(Constants.RBmotor, MotorType.kBrushless);
     LFmotor = new CANSparkMax(Constants.LFmotor, MotorType.kBrushless);
     RFmotor = new CANSparkMax(Constants.RFmotor, MotorType.kBrushless);
-    RBmotor.follow(RFmotor);
+    RBmotor.follow(RFmotor); /* this and line beneath are to have the back motors follow the front motors of their respective sides */
     LBmotor.follow(LFmotor);
   }
 
