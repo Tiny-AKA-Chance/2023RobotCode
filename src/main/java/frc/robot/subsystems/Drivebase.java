@@ -4,10 +4,13 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.Constants;
 
 public class Drivebase extends SubsystemBase implements AutoCloseable {
 
@@ -29,14 +32,18 @@ public class Drivebase extends SubsystemBase implements AutoCloseable {
     RFmotor = new CANSparkMax(Constants.RFmotor, MotorType.kBrushless);
     RBmotor.follow(RFmotor); /* this and line beneath are to have the back motors follow the front motors of their respective sides */
     LBmotor.follow(LFmotor);
-    LFmotor.setSmartCurrentLimit();
+    LFmotor.setSmartCurrentLimit(40);
+    differentialDrive = new DifferentialDrive(LFmotor , RFmotor);
   }
 
   public void spin(double velocity) {
-    motor.set(velocity);
+    LBmotor.set(velocity);
+    RBmotor.set(velocity);
+    LFmotor.set(velocity);
+    RFmotor.set(velocity);
   }
 
-  differentialDrive = new DifferentialDrive(LFmotor , RFmotor);
+  
 
   public void tankDrive(){
     differentialDrive.tankDrive(controller.getRawAxis(1), controller.getRawAxis(3));
@@ -60,7 +67,10 @@ public class Drivebase extends SubsystemBase implements AutoCloseable {
   public void close() throws Exception {
     // This method will close all device handles used by this object and release any other dynamic memory.
     // Mostly for JUnit tests
-    motor.close();
+    LBmotor.close();
+    RBmotor.close();
+    LFmotor.close();
+    RFmotor.close();
     
   }
 }
