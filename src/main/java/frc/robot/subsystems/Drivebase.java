@@ -29,6 +29,7 @@ public class Drivebase extends SubsystemBase implements AutoCloseable {
     RFmotor = new CANSparkMax(Constants.RFmotor, MotorType.kBrushless);
     RBmotor.follow(RFmotor); /* this and line beneath are to have the back motors follow the front motors of their respective sides */
     LBmotor.follow(LFmotor);
+    LFmotor.setSmartCurrentLimit();
   }
 
   public void spin(double velocity) {
