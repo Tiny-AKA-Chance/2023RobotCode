@@ -31,6 +31,7 @@ public class RobotContainer {
     drivebase = new Drivebase(driverJoystick);
   
     configureButtonBindings();
+    drivebase.setDefaultCommand(driveCommand);
   }
 
   /**
